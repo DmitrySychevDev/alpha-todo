@@ -1,44 +1,91 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TodoEdit from '@/components/TodoEdit'
 import Todos from '@/components/Todos'
 
-import { v4 } from 'uuid'
+import request from '@/utils'
 
-import { ITodo, TodoParams } from '@/types'
+import { ITodo, TodoParams, TodoFromRequest, TodosFromRequest } from '@/types'
 
 const Home = () => {
   const [todos, setTodos] = useState<ITodo[]>([])
 
-  const createCard = ({
+  useEffect(() => {
+    request('GET', '/todos').then((data: TodosFromRequest) => {
+      console.log(data)
+      setTodos(
+        data.todos.map((todo) => ({
+          id: todo.id,
+          title: todo.todo,
+          completed: todo.completed,
+          description: '',
+        }))
+      )
+    })
+  }, [])
+
+  const createCard = async ({
     title,
     description,
   }: {
     title: string
     description: string
   }) => {
-    setTodos((prev) => {
-      return [...prev, { id: v4(), title, description, isActive: false }]
-    })
+    try {
+      const newTodo: TodoFromRequest = await request('POST', '/todos/add', {
+        todo: title,
+        userId: 1,
+        completed: false,
+      })
+
+      setTodos((prev) => {
+        return [
+          ...prev,
+          { id: newTodo.id, title, description, completed: newTodo.completed },
+        ]
+      })
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const editCard = (id: string) => {
-    return ({ title, description, isActive }: TodoParams) => {
-      setTodos((prev) => {
-        const newCards = [...prev]
-        const cardIndex = prev.findIndex((card) => card.id === id)
-        if (cardIndex === -1) {
-          return prev
-        }
+    return async ({ title, description, completed }: TodoParams) => {
+      try {
+        const newTodo: TodoFromRequest = await request('PUT', `/todos/${id}`, {
+          todo: title,
+          userId: 1,
+          completed,
+        })
 
-        newCards[cardIndex] = { id, title, description, isActive }
-        return newCards
-      })
+        setTodos((prev) => {
+          const newCards = [...prev]
+          const cardIndex = prev.findIndex((card) => card.id === id)
+          if (cardIndex === -1) {
+            return prev
+          }
+
+          newCards[cardIndex] = {
+            id: newTodo.id,
+            title: newTodo.todo,
+            description,
+            completed: newTodo.completed,
+          }
+          return newCards
+        })
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 
   const deleteCard = (id: string) => {
-    return () => {
-      setTodos((prev) => prev.filter((card) => card.id !== id))
+    return async () => {
+      try {
+        await request('DELETE', `/todos/${id}`)
+        setTodos((prev) => prev.filter((card) => card.id !== id))
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 

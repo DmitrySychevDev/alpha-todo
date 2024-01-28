@@ -17,7 +17,7 @@ const Todos = ({ editCard, todos, deleteCard }: TodosProps) => {
             key={todo.id}
             initialDescription={todo.description}
             initialTitle={todo.title}
-            initialIsActive={todo.isActive}
+            initialIsActive={todo.completed}
             changeTodo={editCard(todo.id)}
             onDelete={deleteCard(todo.id)}
           />

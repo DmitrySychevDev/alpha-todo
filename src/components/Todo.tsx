@@ -40,7 +40,7 @@ const Todo: React.FC<TodoProps> = ({
   }) => {
     if (title && description) {
       setIsEditing(false)
-      changeTodo({ title, description, isActive })
+      changeTodo({ title, description, completed: isActive })
     }
   }
 
@@ -48,7 +48,7 @@ const Todo: React.FC<TodoProps> = ({
     changeTodo({
       description: initialDescription,
       title: initialTitle,
-      isActive: !isActive,
+      completed: !isActive,
     })
     setIsActive(!isActive)
   }
@@ -70,7 +70,9 @@ const Todo: React.FC<TodoProps> = ({
         ) : (
           <div>
             <h2 className="text-xl font-bold mb-2">{initialTitle}</h2>
-            <p className="text-gray-700 mb-4">{initialDescription}</p>
+            <p className="text-gray-700 mb-4">
+              {initialDescription ?? 'Нет описания'}
+            </p>
             <div className="flex gap-2 items-center">
               <div>
                 <Button onClick={handleEditClick}>Редактировать</Button>
