@@ -8,10 +8,10 @@ interface EditTodoPayload {
 }
 
 interface TodoProps {
-  initialDescription: string
-  initialTitle: string
+  initialDescription?: string
+  initialTitle?: string
   onSave: (params: EditTodoPayload) => void
-  onCancel: () => void
+  onCancel?: () => void
 }
 
 const TodoEdit = ({
@@ -20,11 +20,15 @@ const TodoEdit = ({
   onSave,
   onCancel,
 }: TodoProps) => {
-  const [title, setTitle] = useState<string>(initialTitle)
-  const [description, setDescription] = useState<string>(initialDescription)
+  const [title, setTitle] = useState<string>(initialTitle ?? '')
+  const [description, setDescription] = useState<string>(
+    initialDescription ?? ''
+  )
 
   const handleTodoChange = () => {
     onSave({ title, description })
+    setTitle('')
+    setDescription('')
   }
   return (
     <div>

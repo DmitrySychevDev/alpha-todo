@@ -46,6 +46,11 @@ const Todo: React.FC<TodoProps> = ({
   }
 
   const handleCheckboxChange = () => {
+    changeTodo({
+      description: initialDescription,
+      title: initialTitle,
+      isActive: !isActive,
+    })
     setIsActive(!isActive)
   }
 
