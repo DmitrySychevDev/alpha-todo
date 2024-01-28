@@ -1,4 +1,4 @@
-import Input from './input'
+import Input from './Input'
 import Button from './Button'
 import Textarea from './Textarea'
 
