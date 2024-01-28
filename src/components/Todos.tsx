@@ -4,14 +4,25 @@ import Todo from './UI/Todo'
 
 interface ITodo {
   id: string
-  text: string
+  title: string
+  description: string
   isActive: boolean
 }
 
 const Todos = () => {
   const [todos, setTodos] = useState<ITodo[]>([
-    { id: '1234', text: 'test', isActive: false },
-    { id: '12345', text: 'test2', isActive: true },
+    {
+      id: '1234',
+      title: 'test',
+      description: 'test description',
+      isActive: false,
+    },
+    {
+      id: '12345',
+      title: 'test2',
+      description: 'test description2',
+      isActive: true,
+    },
   ])
 
   return (
@@ -20,10 +31,11 @@ const Todos = () => {
         return (
           <Todo
             key={todo.id}
-            text={todo.text}
-            isActive={todo.isActive}
-            changeComplete={(flag: boolean) => {
-              console.log('isActive -', flag)
+            initialDescription={todo.description}
+            initialTitle={todo.title}
+            initialIsActive={todo.isActive}
+            changeTodo={(params) => {
+              console.log(params)
             }}
           />
         )
