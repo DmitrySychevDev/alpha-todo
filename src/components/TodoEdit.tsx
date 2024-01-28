@@ -12,6 +12,8 @@ interface TodoProps {
   initialTitle?: string
   onSave: (params: EditTodoPayload) => void
   onCancel?: () => void
+  submitLabel: string
+  cancelLabel?: string
 }
 
 const TodoEdit = ({
@@ -19,6 +21,8 @@ const TodoEdit = ({
   initialDescription,
   onSave,
   onCancel,
+  submitLabel,
+  cancelLabel,
 }: TodoProps) => {
   const [title, setTitle] = useState<string>(initialTitle ?? '')
   const [description, setDescription] = useState<string>(
@@ -47,8 +51,8 @@ const TodoEdit = ({
         />
       </div>
       <div className="flex gap-4 mt-4">
-        <Button onClick={handleTodoChange}>Сохранить</Button>
-        <Button onClick={onCancel}>Отмена</Button>
+        <Button onClick={handleTodoChange}>{submitLabel}</Button>
+        {onCancel && <Button onClick={onCancel}>{cancelLabel}</Button>}
       </div>
     </div>
   )

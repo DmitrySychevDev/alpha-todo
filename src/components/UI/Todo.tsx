@@ -68,6 +68,8 @@ const Todo: React.FC<TodoProps> = ({
             onCancel={() => {
               setIsEditing(false)
             }}
+            submitLabel="Сохранить"
+            cancelLabel="Отмена"
           />
         ) : (
           <div>

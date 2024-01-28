@@ -55,7 +55,9 @@ const Home = () => {
 
   return (
     <div className="p-5 flex flex-col gap-6">
-      <TodoEdit onSave={createCard} />
+      <div className="w-1/3">
+        <TodoEdit onSave={createCard} submitLabel="Создать" />
+      </div>
       <Todos todos={todos} editCard={editCard} deleteCard={deleteCard} />
     </div>
   )
