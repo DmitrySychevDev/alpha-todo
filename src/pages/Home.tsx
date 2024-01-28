@@ -1,21 +1,10 @@
 import { useState } from 'react'
-import TodoEdit from '../components/TodoEdit'
-import Todos from '../components/Todos'
+import TodoEdit from '@/components/TodoEdit'
+import Todos from '@/components/Todos'
 
 import { v4 } from 'uuid'
 
-interface EditTodoPayload {
-  isActive: boolean
-  description: string
-  title: string
-}
-
-interface ITodo {
-  id: string
-  title: string
-  description: string
-  isActive: boolean
-}
+import { ITodo, TodoParams } from '@/types'
 
 const Home = () => {
   const [todos, setTodos] = useState<ITodo[]>([])
@@ -33,7 +22,7 @@ const Home = () => {
   }
 
   const editCard = (id: string) => {
-    return ({ title, description, isActive }: EditTodoPayload) => {
+    return ({ title, description, isActive }: TodoParams) => {
       setTodos((prev) => {
         const newCards = [...prev]
         const cardIndex = prev.findIndex((card) => card.id === id)

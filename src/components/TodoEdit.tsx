@@ -2,10 +2,7 @@ import { useState } from 'react'
 
 import { Button, Input, Textarea } from './UI'
 
-interface EditTodoPayload {
-  description: string
-  title: string
-}
+import { EditTodoPayload } from '@/types'
 
 interface TodoProps {
   initialDescription?: string

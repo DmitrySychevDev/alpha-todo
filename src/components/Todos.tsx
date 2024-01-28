@@ -1,20 +1,9 @@
-import Todo from './UI/Todo'
+import Todo from './Todo'
 
-interface EditTodoPayload {
-  isActive: boolean
-  description: string
-  title: string
-}
-
-interface ITodo {
-  id: string
-  title: string
-  description: string
-  isActive: boolean
-}
+import { ITodo, TodoParams } from '@/types'
 
 interface TodosProps {
-  editCard: (id: string) => (params: EditTodoPayload) => void
+  editCard: (id: string) => (params: TodoParams) => void
   deleteCard: (id: string) => () => void
   todos: ITodo[]
 }

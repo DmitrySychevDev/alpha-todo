@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import Button from './Button'
+import Button from './UI/Button'
 
-import TodoEdit from '../TodoEdit'
+import { TodoParams } from '@/types'
 
-interface EditTodoPayload {
-  isActive: boolean
-  description: string
-  title: string
-}
+import TodoEdit from './TodoEdit'
 
 interface TodoProps {
   initialIsActive: boolean
   initialDescription: string
   initialTitle: string
-  changeTodo: (params: EditTodoPayload) => void
+  changeTodo: (params: TodoParams) => void
   onDelete: () => void
 }
 
