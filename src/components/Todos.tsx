@@ -15,10 +15,11 @@ interface ITodo {
 
 interface TodosProps {
   editCard: (id: string) => (params: EditTodoPayload) => void
+  deleteCard: (id: string) => () => void
   todos: ITodo[]
 }
 
-const Todos = ({ editCard, todos }: TodosProps) => {
+const Todos = ({ editCard, todos, deleteCard }: TodosProps) => {
   return (
     <div className="flex flex-col gap-2">
       {todos.map((todo) => {
@@ -29,6 +30,7 @@ const Todos = ({ editCard, todos }: TodosProps) => {
             initialTitle={todo.title}
             initialIsActive={todo.isActive}
             changeTodo={editCard(todo.id)}
+            onDelete={deleteCard(todo.id)}
           />
         )
       })}

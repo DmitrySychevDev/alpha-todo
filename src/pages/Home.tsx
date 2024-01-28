@@ -47,10 +47,16 @@ const Home = () => {
     }
   }
 
+  const deleteCard = (id: string) => {
+    return () => {
+      setTodos((prev) => prev.filter((card) => card.id !== id))
+    }
+  }
+
   return (
     <div className="p-5 flex flex-col gap-6">
       <TodoEdit onSave={createCard} />
-      <Todos todos={todos} editCard={editCard} />
+      <Todos todos={todos} editCard={editCard} deleteCard={deleteCard} />
     </div>
   )
 }

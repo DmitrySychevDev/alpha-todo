@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Button from './Button'
 
 import TodoEdit from '../TodoEdit'
 
@@ -13,6 +14,7 @@ interface TodoProps {
   initialDescription: string
   initialTitle: string
   changeTodo: (params: EditTodoPayload) => void
+  onDelete: () => void
 }
 
 const Todo: React.FC<TodoProps> = ({
@@ -20,6 +22,7 @@ const Todo: React.FC<TodoProps> = ({
   initialDescription,
   initialIsActive,
   changeTodo,
+  onDelete,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(initialIsActive)
   const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -56,13 +59,6 @@ const Todo: React.FC<TodoProps> = ({
 
   return (
     <div className="max-w-md bg-white shadow-md rounded-md overflow-hidden">
-      <div
-        className={`bg-${
-          isActive ? 'green-500' : 'gray-200'
-        } p-4 text-white text-center font-bold`}
-      >
-        {isActive ? 'Выполнено' : 'В процессе'}
-      </div>
       <div className="p-4">
         {isEditing ? (
           <TodoEdit
@@ -77,19 +73,25 @@ const Todo: React.FC<TodoProps> = ({
           <div>
             <h2 className="text-xl font-bold mb-2">{initialTitle}</h2>
             <p className="text-gray-700 mb-4">{initialDescription}</p>
-            <button
-              onClick={handleEditClick}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-            >
-              Edit
-            </button>
-            <input
-              type="checkbox"
-              checked={initialIsActive}
-              onChange={handleCheckboxChange}
-              className="mr-2 cursor-pointer"
-            />
-            <span className="text-gray-700">Mark as completed</span>
+            <div className="flex gap-2 items-center">
+              <div>
+                <Button onClick={handleEditClick}>Редактировать</Button>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  checked={initialIsActive}
+                  onChange={handleCheckboxChange}
+                  className="mr-2 cursor-pointer"
+                />
+                <span className="text-gray-700">Отметка о выполнении</span>
+              </div>
+            </div>
+            <div className="mt-2">
+              <Button onClick={onDelete} danger>
+                Удалить
+              </Button>
+            </div>
           </div>
         )}
       </div>
